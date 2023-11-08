@@ -22,7 +22,7 @@ export default function HomePage() {
             <section className={style.section__btn}>
                 <div className={style.btn__container}>
                     <button className={[style.btn__chat, style.btn__newChat,].join(' ')} onClick={handlerClickNewChat}>
-                        <IconContext.Provider value={{className: 'btn__connetChat__icon'}}>
+                        <IconContext.Provider value={{className: 'btn__connectChat__icon'}}>
                             <>
                                 <BsFillCameraVideoFill />
                             </>
@@ -33,7 +33,7 @@ export default function HomePage() {
 
                 <div className={style.btn__container}>
                     <button className={[style.btn__chat, style.btn__connectChat,].join(' ')} onClick={handlerClickConnectBtn}>
-                        <IconContext.Provider value={{className: 'btn__connetChat__icon'}}>
+                        <IconContext.Provider value={{className: 'btn__connectChat__icon'}}>
                             <>
                                 <FiPlusCircle />
                             </>
