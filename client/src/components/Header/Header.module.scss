@@ -1,0 +1,46 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 25vh;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .logo__text {
+        font-weight: 500;
+        font-size: 1.5em;
+    }
+
+    .logo {
+        width: 2em;
+        height: 2em;
+    }
+}
+
+.header__nav {
+
+    .login {
+        p {
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: #3CB371;
+            color: #fff;
+
+            &:hover {
+                background-color: lighten($color: #3CB371, $amount: 15);
+            }
+
+            &:active {
+                top: 1px;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            }
+        }
+
+        
+    }
+}
