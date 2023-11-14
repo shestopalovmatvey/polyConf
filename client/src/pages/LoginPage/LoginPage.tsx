@@ -24,7 +24,7 @@ export const LoginPage: FC = () => {
                   <p>Войти</p>
               </button>
 
-              <p className={style.no__acc}>У вас нет учетной записи? <Link>Зарегистрироваться</Link></p>
+              <p className={style.no__acc}>У вас нет учетной записи? <Link to={'/signUp'}>Зарегистрироваться</Link></p>
             </form>
         </section>
     </div>

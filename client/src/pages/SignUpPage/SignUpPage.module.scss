@@ -43,10 +43,32 @@
             }
         }
 
+        .userName__field {
+            .input__userName {
+                text-transform: capitalize;
+
+                &::placeholder {
+                    text-transform: none;
+                }
+            }
+
+        }
+
+        .userLastName__field {
+            .input__userLastName {
+                text-transform: capitalize;
+
+                &::placeholder {
+                    text-transform: none;
+                }
+            }
+        }
+
         .email__field {
             .input__email {
+                
                 &::placeholder {
-
+                    text-transform: none;
                 }
             }
         }
