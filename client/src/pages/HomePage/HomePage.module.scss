@@ -38,6 +38,11 @@
     border-radius: 10px;
     transition: 0.1s all ease-in-out;
 
+    svg {
+        width: 2em;
+        color: #fff;
+    }
+
     &:active {
         top: -0.5px;
         bottom: -1px;
