@@ -5,6 +5,7 @@ import { IconContext } from "react-icons";
 import {FiPlusCircle} from 'react-icons/fi'
 import { DateTimeDisplay } from '../../components/DateTimeDisplay/DateTimeDisplay';
 import { nanoid } from 'nanoid'
+import { Header } from '../../components/Header/Header';
 
 export default function HomePage() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function HomePage() {
 
     return (
         <div className={style.container}>
+            <Header />
             <section className={style.section__btn}>
                 <div className={style.btn__container}>
                     <button className={[style.btn__chat, style.btn__newChat,].join(' ')} onClick={handlerClickNewChat}>
@@ -41,10 +43,9 @@ export default function HomePage() {
                     </button>
                     <span>Подключиться</span>
                 </div>
-            </section>
-            
 
-            <DateTimeDisplay />
+                <DateTimeDisplay />
+            </section>
         </div>
     )
 }
