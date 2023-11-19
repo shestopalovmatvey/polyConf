@@ -1,24 +1,54 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import style from './LoginPage.module.scss'
 import { Header } from '../../components/Header/Header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import $api from '../../http'
+import { IAuthResponse } from '../../models/response/AuthResponse'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser } from '../../redux/user/user.slice'
 
 export const LoginPage: FC = () => {
+  const { user } = useSelector((state) => state)
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await $api.post<IAuthResponse>('/login', {email, password})
+      localStorage.setItem('token', response.data.accessToken)
+      dispatch(setUser(response.data.user))
+      navigate('/')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const handleSubmit = async (e: HTMLFormElement) => { 
+    e.preventDefault()
+    
+    login(email, password)
+    
+  }
+
+
   return (
     <div className={style.container}>
         <Header />
         <section className={style.section}>
-            <form className={style.form}>
+            <form className={style.form} onSubmit={handleSubmit}>
               <div className={style.title__form}>
                   <h3>Вход</h3>
               </div>
               <div className={`${style.input__field} ${style.email__field}`}>
                 <p>Email:</p>
-                <input type="email" placeholder='Ваш email' className={`${style.input} ${style.input__email}`}/>
+                <input type="email" placeholder='Ваш email' className={`${style.input} ${style.input__email}`} value={email} onChange={(e) => setEmail(e.target.value)}/>
               </div>
               <div className={`${style.input__field} ${style.input__field}`}>
                 <p>Пароль:</p>
-                <input type="password" placeholder='Ваш пароль' className={`${style.input}`}/>
+                <input type="password" placeholder='Ваш пароль' className={`${style.input}`} value={password} onChange={(e) => setPassword(e.target.value)}/>
               </div>
               <button type='submit' className={style.submit__btn}>
                   <p>Войти</p>

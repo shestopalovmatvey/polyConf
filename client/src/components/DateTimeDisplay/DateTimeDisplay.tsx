@@ -1,7 +1,9 @@
 import { FC, useEffect, useState } from 'react'
 import style from './DateTimeDisplay.module.scss'
+import { useSelector } from 'react-redux';
 
 export const DateTimeDisplay: FC = () => {
+    const {user} = useSelector((store) => store)
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
   
     useEffect(() => {
@@ -36,7 +38,10 @@ export const DateTimeDisplay: FC = () => {
         </div>
         
         <div className={style.add__calendar}>
-
+            {user.isAuth && <div className={style.userName}>
+              <h3>Добро пожаловать!</h3>
+              <p>{user.user.userName}</p>
+              </div>}
         </div>
       </div>
     );
