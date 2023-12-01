@@ -29,11 +29,6 @@
         line-height: 18px;
         color: #222230;
         margin: 25px 0;
-        text-transform: capitalize;
-
-        &::placeholder {
-            text-transform: none;
-        }
     }
 
     .connect__btn {
