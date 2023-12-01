@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { API_URL } from "../http"
 import axios from "axios"
 import { setUser } from "../redux/user/user.slice"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
+import { Loader } from "../components/Loader/Loader"
 
 function App() {
   const {user} = useSelector((store) => store)
@@ -25,17 +26,32 @@ function App() {
     }
   }
 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       checkAuth()
     }
+    setLoading(false);
   }, [])
 
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      setLoading(true);
+    };
 
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>
+      {loading ? (
+        <Loader />
+      ) : (
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/join" element={<ConnectPage />}/>
@@ -43,6 +59,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signUp" element={<SignUpPage />} />
       </Routes>
+      )}
     </>
   )
 }
