@@ -6,12 +6,16 @@ import $api from '../../http'
 import { IAuthResponse } from '../../models/response/AuthResponse'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../redux/user/user.slice'
+import { Modal } from '../../components/ModalComponent/ModalComponent'
 
 export const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+
+  const [modalActive, setModalActive] = useState(false)
+  const [message, setMessage] = useState('');
 
 
   const login = async (email: string, password: string) => {
@@ -22,6 +26,8 @@ export const LoginPage: FC = () => {
       navigate('/')
     } catch (e) {
       console.log(e)
+      setMessage(e.response.data.message);
+      setModalActive(true);
     }
   }
 
@@ -29,9 +35,7 @@ export const LoginPage: FC = () => {
     e.preventDefault()
     
     login(email, password)
-    
   }
-
 
   return (
     <div className={style.container}>
@@ -56,6 +60,9 @@ export const LoginPage: FC = () => {
               <p className={style.no__acc}>У вас нет учетной записи? <Link to={'/signUp'}>Зарегистрироваться</Link></p>
             </form>
         </section>
+        <Modal active={modalActive} setActive={setModalActive}>
+          {message}
+        </Modal>
     </div>
   )
 }
