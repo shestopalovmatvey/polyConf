@@ -3,6 +3,7 @@ import style from './SignUpPage.module.scss'
 import { Header } from '../../components/Header/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import $api from '../../http'
+import { Modal } from '../../components/ModalComponent/ModalComponent'
 
 
 interface IUserName {
@@ -28,6 +29,9 @@ export const SignUpPage: FC = () => {
     })
   }
 
+  const [modalActive, setModalActive] = useState(false)
+  const [message, setMessage] = useState('');
+
 
   const sugnUp = async (email: string, password: string, userName: IUserName) => {
     try {
@@ -35,8 +39,12 @@ export const SignUpPage: FC = () => {
       const response = await $api.post('/registration', {email, password, userName: `${userName.firstName} ${userName.lastName}`})
       localStorage.setItem('token', response.data.accessToken)
       removeInputValue()
+      setMessage("Вы успешно зарегистрировались!");
+      setModalActive(true);
     } catch (e) {
       console.log(e)
+      setMessage(e.response.data.message);
+      setModalActive(true);
     }
   }
 
@@ -46,6 +54,7 @@ export const SignUpPage: FC = () => {
 
     sugnUp(email, password, userName)
   }
+
 
   return (
     <div className={style.container}>
@@ -71,13 +80,16 @@ export const SignUpPage: FC = () => {
                 <p>Пароль:</p>
                 <input type="password" placeholder='Введите пароль' className={`${style.input}`} value={password} onChange={(e) => setPassword(e.target.value)}/>
               </div>
-              <button type='submit' className={style.submit__btn}>
+              <button type='submit' className={style.submit__btn} onClick={() => setModalActive(true)}>
                   <p>Зарегистрироваться</p>
               </button>
 
               <p className={style.no__acc}>У вас уже есть учетная запись? <Link to={'/login'}>Войти</Link></p>
             </form>
         </section>
+        <Modal active={modalActive} setActive={setModalActive}>
+          {message}
+        </Modal>
     </div>
   )
 }
