@@ -20,8 +20,8 @@
 
     span {
         margin-top: 15px;
-        font-size: 14px;
-        font-weight: 400;
+        font-size: 1em;
+        font-weight: 500;
     }
 }
 
@@ -52,11 +52,15 @@
     background-color: #3CB371;
 
     &:hover {
-        background-color: lighten($color: #3CB371, $amount: 5);
+        background-color: lighten($color: #3CB371, $amount: 10);
     }
 }
 
 
 .btn__connectChat {
     background-color: #0790FA;
+
+    &:hover {
+        background-color: lighten($color: #0790FA, $amount: 10);
+    }
 }

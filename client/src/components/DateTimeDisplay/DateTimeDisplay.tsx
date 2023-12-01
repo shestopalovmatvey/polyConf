@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import style from './DateTimeDisplay.module.scss'
 import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export const DateTimeDisplay: FC = () => {
-    const {user} = useSelector((store) => store)
+    const {user} = useSelector((store: RootState) => store)
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
   
     useEffect(() => {

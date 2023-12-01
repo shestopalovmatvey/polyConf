@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import style from './SignUpPage.module.scss'
 import { Header } from '../../components/Header/Header'
 import { Link, useNavigate } from 'react-router-dom'
@@ -26,12 +26,13 @@ export const SignUpPage: FC = () => {
       firstName: '',
       lastName: ''
     })
+
+    navigate('/login')
   }
 
 
   const sugnUp = async (email: string, password: string, userName: IUserName) => {
     try {
-      
       const response = await $api.post('/registration', {email, password, userName: `${userName.firstName} ${userName.lastName}`})
       localStorage.setItem('token', response.data.accessToken)
       removeInputValue()
@@ -41,7 +42,7 @@ export const SignUpPage: FC = () => {
   }
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement> ) => {
     e.preventDefault()
 
     sugnUp(email, password, userName)

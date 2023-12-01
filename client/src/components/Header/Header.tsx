@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import $api from '../../http'
 import { logoutUser } from '../../redux/user/user.slice'
+import { RootState } from '../../redux/store'
 
 export const Header: FC = () => {
-    const {user} = useSelector(state => state)
+    const {user} = useSelector((state: RootState) => state)
     const dispatch = useDispatch()
 
     const handleClickLogoutBtn = async () => {

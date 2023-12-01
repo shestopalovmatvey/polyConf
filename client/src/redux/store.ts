@@ -8,3 +8,6 @@ const redusers = combineReducers({
 export const store = configureStore({
     reducer: redusers
 })
+
+export type RootState = ReturnType<typeof store.getState>
+

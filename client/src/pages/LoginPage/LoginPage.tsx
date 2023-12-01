@@ -1,14 +1,13 @@
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import style from './LoginPage.module.scss'
 import { Header } from '../../components/Header/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import $api from '../../http'
 import { IAuthResponse } from '../../models/response/AuthResponse'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUser } from '../../redux/user/user.slice'
 
 export const LoginPage: FC = () => {
-  const { user } = useSelector((state) => state)
   const dispatch = useDispatch();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -26,7 +25,7 @@ export const LoginPage: FC = () => {
     }
   }
 
-  const handleSubmit = async (e: HTMLFormElement) => { 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => { 
     e.preventDefault()
     
     login(email, password)
@@ -44,7 +43,7 @@ export const LoginPage: FC = () => {
               </div>
               <div className={`${style.input__field} ${style.email__field}`}>
                 <p>Email:</p>
-                <input type="email" placeholder='Ваш email' className={`${style.input} ${style.input__email}`} value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input type="email" placeholder='Ваш email' autoComplete="on" className={`${style.input} ${style.input__email}`} value={email} onChange={(e) => setEmail(e.target.value)}/>
               </div>
               <div className={`${style.input__field} ${style.input__field}`}>
                 <p>Пароль:</p>

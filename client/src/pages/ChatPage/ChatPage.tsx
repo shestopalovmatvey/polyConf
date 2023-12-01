@@ -4,12 +4,13 @@ import { nanoid } from 'nanoid';
 import style from './ChatPage.module.scss'
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { RootState } from '../../redux/store';
 
 const APP_ID = 1812404065
 const ServerSecret = 'b662c4c9450632e79a2711a83f12c8d5'
 
 export default function ChatPage() {
-    const {user} = useSelector((store) => store)
+    const {user} = useSelector((store: RootState) => store)
     const { roomId } = useParams()
     const [userName, setUserName] = useState("")
     
