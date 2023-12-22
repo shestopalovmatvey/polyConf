@@ -53,6 +53,9 @@ class UserController {
         }
     }
 
+    async activate(req, res, next) {
+        
+    }
 
     async getUsers(req, res, next) {
         try {

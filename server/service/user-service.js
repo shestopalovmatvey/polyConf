@@ -1,8 +1,10 @@
 const UserModel = require('../models/user_models')
 const bcrypt = require('bcrypt')
+const uuid = require('uuid')
 const tokenService = require('./token-service')
 const UserDto = require('../dtos/user-dto')
 const ApiError = require('../exceptions/api-error')
+const mailService = require('./mail-service')
 
 class UserService {
     async registration(email, password, userName) {
@@ -11,7 +13,11 @@ class UserService {
             throw ApiError.BadRequest('Пользователь с таким email уже существует')
         }
         const hashPassword = await bcrypt.hash(password, 3)
+        const activationLink = uuid.v4()
         const user = await UserModel.create({email, password: hashPassword, userName})
+        
+
+        await mailService.sendMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
 
         const userDto = new UserDto(user)
         const tokens = tokenService.generateToken({...userDto})
