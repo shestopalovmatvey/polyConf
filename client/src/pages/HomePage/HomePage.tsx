@@ -6,16 +6,28 @@ import {FiPlusCircle} from 'react-icons/fi'
 import { DateTimeDisplay } from '../../components/DateTimeDisplay/DateTimeDisplay';
 import { nanoid } from 'nanoid'
 import { Header } from '../../components/Header/Header';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export default function HomePage() {
+    const user = useSelector((store: RootState) => store.user)
     const navigate = useNavigate()
 
     const handlerClickConnectBtn = () => {
-        navigate('/join')
+        if (user.isAuth) {
+            navigate('/join')
+        } else {
+            navigate(`/login`)
+        }
+        
     }
 
     const handlerClickNewChat = () => {
-        navigate(`/room/${nanoid(10)}`)
+        if (user.isAuth) {
+            navigate(`/room/${nanoid(10)}`)
+        } else {
+            navigate(`/login`)
+        }
     }
 
     return (
