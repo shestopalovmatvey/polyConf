@@ -157,3 +157,63 @@ describe('User Controller - Login', () => {
   });
 });
 
+
+describe('User Controller - Logout', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should successfully logout a user', async () => {
+    const req = {
+      cookies: {
+        refreshToken: 'mockRefreshToken',
+      },
+    };
+
+    const res = {
+      clearCookie: jest.fn(),
+      json: jest.fn(),
+    };
+
+    const next = jest.fn();
+
+    userService.logout.mockResolvedValue({
+      message: 'Successfully logged out',
+    });
+
+    await userController.logout(req, res, next);
+
+    expect(userService.logout).toHaveBeenCalledWith('mockRefreshToken');
+    expect(res.clearCookie).toHaveBeenCalledWith('refreshToken');
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Successfully logged out',
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('should handle errors during logout', async () => {
+    const req = {
+      cookies: {
+        refreshToken: 'mockRefreshToken',
+      },
+    };
+
+    const res = {
+      clearCookie: jest.fn(),
+      json: jest.fn(),
+    };
+
+    const next = jest.fn();
+
+    const error = new Error('Logout error');
+
+    userService.logout.mockRejectedValue(error);
+
+    await userController.logout(req, res, next);
+
+    expect(userService.logout).toHaveBeenCalledWith('mockRefreshToken');
+    expect(res.clearCookie).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
+    expect(next).toHaveBeenCalledWith(error);
+  });
+});
